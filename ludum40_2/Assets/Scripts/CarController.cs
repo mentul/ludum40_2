@@ -7,19 +7,22 @@ using UnityEngine.UI;
 public class CarController : MonoBehaviour
 {
 
-	static int maxDamage = 100;
-	static int barrierCoolDownValue = 4;
+	static int maxHP = 150;
+	static int barrierCoolDownValue = 1;
+	static int maxLap = 5;
 
-	private int damage = 0;
+	private int hp = 150;
 	private int coins = 0;
 	private int fameLevel = 0;
-	private int lap = 1;
 	public float velocity = 2f;
 	public float currentVelocity = 0f;
 	public float angle = 30;
 	public float coolDown = 1;
+	public int lapCount = 1;
 	public GameObject checkPoint;
 	public GameObject car;
+	public GameObject beggar;
+
 	private Rigidbody2D myRigidBody;
 
 	public Text coinsLabel;
@@ -28,12 +31,13 @@ public class CarController : MonoBehaviour
 	public Text lapLabel;
 
 	// Use this for initialization
-
+	private bool keyboardBlocked;
 
 
 	public void DoInit () {
 		myRigidBody = GetComponent<Rigidbody2D> ();
 		currentVelocity = velocity;
+		keyboardBlocked = false;
 	}
 
 	// Update is called once per frame
@@ -41,29 +45,28 @@ public class CarController : MonoBehaviour
 	{
 		coolDown -= Time.deltaTime;
 
+		if (!keyboardBlocked) {
+			if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.D)) {
+				car.transform.Rotate (0, 0, -angle * Time.deltaTime);
 
-		if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.D))
-		{
-			car.transform.Rotate (0, 0, -angle * Time.deltaTime);
+			}
+			if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A)) {
+				car.transform.Rotate (0, 0, angle * Time.deltaTime);
 
+			}
+			if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey (KeyCode.W)) {
+				currentVelocity += velocity * Time.deltaTime;
+				if (currentVelocity > 2 * velocity)
+					currentVelocity = 2 * velocity;
+			} else {
+				currentVelocity -= velocity * Time.deltaTime;
+				if (currentVelocity < velocity)
+					currentVelocity = velocity;
+			}
 		}
-		if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A))
-		{
-			car.transform.Rotate (0, 0, angle * Time.deltaTime);
 
-		}
-		if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey (KeyCode.W))
-		{
-			currentVelocity += velocity * Time.deltaTime;
-			if (currentVelocity > 2 * velocity)
-				currentVelocity = 2 * velocity;
-		}
-		else
-		{
-			currentVelocity -= velocity * Time.deltaTime;
-			if (currentVelocity < velocity)
-				currentVelocity = velocity;
-		}
+
+
 		myRigidBody.velocity = car.transform.up * currentVelocity;
 
 	}
@@ -77,11 +80,26 @@ public class CarController : MonoBehaviour
 		{
 			this.coins++;
 			Destroy(other.gameObject);
+			this.showBeggaer ();
 			this.UpdateFameLevel ();
 		}
 		else if (other.CompareTag("checkPoint")) 
 		{
 			this.checkPoint = other.gameObject;
+		}
+		else if (other.CompareTag("finish")) 
+		{
+			if (this.checkPoint.tag != "finish")
+			{
+				lapCount += 1;
+			}
+
+			this.checkPoint = other.gameObject;
+			if (lapCount > 5) {
+				lapLabel.text = "FINISHED";
+
+			}
+			UpdateFameLevel ();
 		}
 	}
 
@@ -91,19 +109,18 @@ public class CarController : MonoBehaviour
 
 		if (other.gameObject.CompareTag ("box"))
 		{
-			this.damage += 10;
+			this.hp -= 10;
 		}
 		else if (other.gameObject.CompareTag ("barrel"))
 		{
-			this.damage += 15;
+			this.hp -= 15;
 		}
-		else if (other.gameObject.CompareTag ("barrier"))
+		else if (other.gameObject.CompareTag ("barrier") && coolDown < 0)
 		{
-			this.damage += 20;
+			this.hp -= 20;
+			coolDown = barrierCoolDownValue;
 		}
-		print ("DAMAGE " + this.damage);
 
-		damageLabel.text = ("Damage " + this.damage + "/" + maxDamage);
 		this.UpdateGameStatus ();
 
 	}
@@ -112,28 +129,47 @@ public class CarController : MonoBehaviour
 
 	private void UpdateGameStatus ()
 	{
-		if (damage >= maxDamage && coolDown < 0) {
+		if (hp <= 0) {
 			this.transform.position = this.checkPoint.transform.position;
 			this.transform.rotation = this.checkPoint.transform.rotation;
 			myRigidBody.velocity = Vector2.zero;
-			this.damage = 0;
+			this.hp = 150;
 			coolDown = barrierCoolDownValue;
 		}	
+
+		damageLabel.text = ("HP " + this.hp + "/" + maxHP);
+
 	}
 
 	public void UpdateFameLevel ()
 	{
-		fameLevel = coins / 10 * lap;
+		fameLevel = coins / 10 + lapCount;
 
 		coinsLabel.text = "Coins " + coins;
 		fameLabel.text = "Fame " + fameLevel;
 
 	}
-
-	public void UpdateLapLevel (int lapCount)
+		
+	public void changeKeyboardBlock(bool block)
 	{
-		this.lap = lapCount;
-		this.UpdateFameLevel ();
+		keyboardBlocked = block;
+	}
+
+	public void showBeggaer()
+	{
+		float x = car.transform.position.x;
+		float y = car.transform.position.y;
+
+		for (int i = 0; i <= fameLevel; i++)
+		{
+			keyboardBlocked = true;
+			float randX = Random.Range (x - 5, x + 5);
+			float randY = Random.Range (y - 5, y + 5);
+
+			Instantiate (beggar, new Vector3 (randX, randY), beggar.transform.rotation).transform.SetParent (GameController.Current.camera.transform);
+		}
+
+
 	}
 
 }

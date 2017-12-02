@@ -9,11 +9,13 @@ public class GameController : MonoBehaviour
 	public CameraController camera;
 	public int loopCount;
 	public bool isRunning;
+	public GameObject map;
 
 	void Start ()
 	{
 		Current = this;
 		camera.DoInit ();
+		CreateMap ();
 	}
 
 	void Update ()
@@ -30,6 +32,14 @@ public class GameController : MonoBehaviour
 				isRunning = true;
 				car.DoInit ();
 			}
+		}
+	}
+
+	void CreateMap ()
+	{
+		for (int i=0; i < loopCount; i++)
+		{
+			Instantiate (map, new Vector3 (i * 42f, 0f), map.transform.rotation);
 		}
 	}
 }
