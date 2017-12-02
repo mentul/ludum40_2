@@ -2,15 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController : MonoBehaviour {
+public class GameController : MonoBehaviour
+{
+	public static GameController Current;
+	public CarController car;
+	public CameraController camera;
+	public int loopCount;
 
-	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+	{
+		Current = this;
+		car.DoInit ();
+		camera.DoInit ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	void Update ()
+	{
+		car.DoUpdate ();
+		camera.DoUpdate ();
 	}
 }
