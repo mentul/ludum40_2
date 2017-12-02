@@ -9,6 +9,8 @@ TagManager:
   - barrier
   - coin
   - checkPoint
+  - coinsLabel
+  - finish
   layers:
   - Default
   - TransparentFX
