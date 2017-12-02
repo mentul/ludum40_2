@@ -91,7 +91,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &70234312509073022
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
@@ -119,7 +119,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 2
-  angle: 40
+  currentVelocity: 0
+  angle: 80
   car: {fileID: 1451783126354926}
 --- !u!212 &212878243728493290
 SpriteRenderer:
@@ -161,4 +162,3 @@ SpriteRenderer:
   m_Size: {x: 0.4, y: 0.87}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
