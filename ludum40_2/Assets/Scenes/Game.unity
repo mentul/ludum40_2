@@ -222,18 +222,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1243502124841602, guid: 6f8a5113da9a34743b71e405f865e795, type: 2}
-      propertyPath: m_TagString
-      value: coin
-      objectReference: {fileID: 0}
-    - target: {fileID: 1123445783544090, guid: 6f8a5113da9a34743b71e405f865e795, type: 2}
-      propertyPath: m_TagString
-      value: barrel
-      objectReference: {fileID: 0}
-    - target: {fileID: 1713242223455504, guid: 6f8a5113da9a34743b71e405f865e795, type: 2}
-      propertyPath: m_TagString
-      value: box
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6f8a5113da9a34743b71e405f865e795, type: 2}
   m_IsPrefabParent: 0

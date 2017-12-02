@@ -1,9 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
+
+	static int maxDamage = 10;
 
 	private int damage = 0;
 	private int coins = 0;
@@ -13,11 +15,14 @@ public class CarController : MonoBehaviour
 	public float currentVelocity = 0f;
 	public float angle = 30;
 
-	public  GameObject car;
+	public GameObject checkPoint;
+	public GameObject car;
 	private Rigidbody2D myRigidBody;
 	// Use this for initialization
-	public void DoInit ()
-	{
+
+
+
+	public void DoInit () {
 		myRigidBody = GetComponent<Rigidbody2D> ();
 		currentVelocity = velocity;
 	}
@@ -63,7 +68,11 @@ public class CarController : MonoBehaviour
 		{
 			this.coins++;
 			this.UpdateFameLevel ();
-		};
+		}
+		else if (other.CompareTag("checkPoint")) 
+		{
+			this.checkPoint = other.gameObject;
+		}
 	}
 
 	void OnCollisionEnter2D (Collision2D other)
@@ -82,6 +91,7 @@ public class CarController : MonoBehaviour
 		{
 			this.damage += 20;
 		}
+		print ("DAMAGE " + this.damage);
 		this.UpdateGameStatus ();
 
 	}
@@ -90,7 +100,14 @@ public class CarController : MonoBehaviour
 
 	private void UpdateGameStatus ()
 	{
+		if (damage >= maxDamage) {
+			print ("DAMAGE " + this.checkPoint.transform.position);
 
+			this.transform.position = this.checkPoint.transform.position;
+			this.transform.rotation = this.checkPoint.transform.rotation;
+			myRigidBody.velocity = Vector2.zero;
+
+		}	
 	}
 
 	public void UpdateFameLevel ()
