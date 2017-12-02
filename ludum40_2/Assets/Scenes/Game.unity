@@ -116,6 +116,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 333850895}
+  - component: {fileID: 333850896}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -136,7 +137,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &752981294
+--- !u!114 &333850896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 333850894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c9dd338e90fcd943a039192532dbfe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  car: {fileID: 1528989445}
+  camera: {fileID: 394283001}
+  loopCount: 0
+--- !u!114 &394283001 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114787164321149512, guid: 57ac67e80a66ca14bb7ed385abe715b3,
+    type: 2}
+  m_PrefabInternal: {fileID: 1673652670}
+  m_Script: {fileID: 11500000, guid: 969fd44f6698f91418b836aeba0da6de, type: 3}
+--- !u!1001 &431285420
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -175,9 +196,27 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1243502124841602, guid: 6f8a5113da9a34743b71e405f865e795, type: 2}
+      propertyPath: m_TagString
+      value: coin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1123445783544090, guid: 6f8a5113da9a34743b71e405f865e795, type: 2}
+      propertyPath: m_TagString
+      value: barrel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1713242223455504, guid: 6f8a5113da9a34743b71e405f865e795, type: 2}
+      propertyPath: m_TagString
+      value: box
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6f8a5113da9a34743b71e405f865e795, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1528989445 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114740301399247034, guid: 5a640478566864aef9046d5bba57c2a5,
+    type: 2}
+  m_PrefabInternal: {fileID: 1871767090}
+  m_Script: {fileID: 11500000, guid: 99b170473a3e7904c8ceb80a1e852234, type: 3}
 --- !u!1001 &1673652670
 Prefab:
   m_ObjectHideFlags: 0
@@ -187,7 +226,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4279461728947452, guid: 57ac67e80a66ca14bb7ed385abe715b3, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4279461728947452, guid: 57ac67e80a66ca14bb7ed385abe715b3, type: 2}
       propertyPath: m_LocalPosition.y

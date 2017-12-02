@@ -18,7 +18,6 @@ public class GameController : MonoBehaviour
 
 	void Update ()
 	{
-		print("UPDATE");
 		car.DoUpdate ();
 		camera.DoUpdate ();
 	}
