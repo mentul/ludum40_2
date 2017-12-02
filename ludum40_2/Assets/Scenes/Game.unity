@@ -196,18 +196,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1243502124841602, guid: 6f8a5113da9a34743b71e405f865e795, type: 2}
-      propertyPath: m_TagString
-      value: coin
-      objectReference: {fileID: 0}
-    - target: {fileID: 1123445783544090, guid: 6f8a5113da9a34743b71e405f865e795, type: 2}
-      propertyPath: m_TagString
-      value: barrel
-      objectReference: {fileID: 0}
-    - target: {fileID: 1713242223455504, guid: 6f8a5113da9a34743b71e405f865e795, type: 2}
-      propertyPath: m_TagString
-      value: box
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6f8a5113da9a34743b71e405f865e795, type: 2}
   m_IsPrefabParent: 0
@@ -301,6 +289,16 @@ Prefab:
     - target: {fileID: 4452004418650372, guid: 5a640478566864aef9046d5bba57c2a5, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114740301399247034, guid: 5a640478566864aef9046d5bba57c2a5,
+        type: 2}
+      propertyPath: velocity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50954231890312972, guid: 5a640478566864aef9046d5bba57c2a5,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a640478566864aef9046d5bba57c2a5, type: 2}
