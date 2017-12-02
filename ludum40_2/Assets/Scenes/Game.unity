@@ -781,7 +781,7 @@ Prefab:
     - target: {fileID: 114740301399247034, guid: 5a640478566864aef9046d5bba57c2a5,
         type: 2}
       propertyPath: angle
-      value: 80
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 50954231890312972, guid: 5a640478566864aef9046d5bba57c2a5,
         type: 2}
@@ -808,6 +808,16 @@ Prefab:
       propertyPath: fameLabel
       value: 
       objectReference: {fileID: 1376605471}
+    - target: {fileID: 114740301399247034, guid: 5a640478566864aef9046d5bba57c2a5,
+        type: 2}
+      propertyPath: lapLabel
+      value: 
+      objectReference: {fileID: 1439372683}
+    - target: {fileID: 114740301399247034, guid: 5a640478566864aef9046d5bba57c2a5,
+        type: 2}
+      propertyPath: velocity
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a640478566864aef9046d5bba57c2a5, type: 2}
   m_IsPrefabParent: 0
