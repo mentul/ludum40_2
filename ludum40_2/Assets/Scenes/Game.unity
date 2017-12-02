@@ -225,6 +225,80 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6f8a5113da9a34743b71e405f865e795, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &431285421 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1597434484848002, guid: 6f8a5113da9a34743b71e405f865e795,
+    type: 2}
+  m_PrefabInternal: {fileID: 431285420}
+--- !u!68 &431285422
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 431285421}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -9.573675, y: 0.059074074}
+  - {x: -9.437941, y: 0.53985363}
+  - {x: -9.114528, y: 0.8897308}
+  - {x: -8.681888, y: 1.1207372}
+  - {x: -2.008615, y: 1.1121463}
+  - {x: -1.4568907, y: 0.908265}
+  - {x: -1.0940832, y: 0.58696663}
+  - {x: -0.953264, y: 0.20301509}
+  - {x: -0.91925985, y: -0.5291594}
+  - {x: -0.70585734, y: -1.1831094}
+  - {x: -0.3852601, y: -1.7349081}
+  - {x: 0.15681589, y: -2.4092853}
+  - {x: 1.1960155, y: -2.9899654}
+  - {x: 1.7958872, y: -3.2004578}
+  - {x: 8.537346, y: -3.1881032}
+  - {x: 9.15754, y: -3.030546}
+  - {x: 9.86153, y: -2.72495}
+  - {x: 10.432, y: -2.300394}
+  - {x: 11.088815, y: -1.3893661}
+  - {x: 11.354247, y: -0.5956728}
+  - {x: 11.453471, y: 0.10826397}
+--- !u!68 &431285423
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 431285421}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -11.525647, y: 0.10826421}
+  - {x: -11.430568, y: 0.67807907}
+  - {x: -11.158388, y: 1.359464}
+  - {x: -10.4384365, y: 2.3264658}
+  - {x: -9.342143, y: 2.9473474}
+  - {x: -8.456188, y: 3.262165}
+  - {x: -3.9701614, y: 3.1687353}
+  - {x: -1.9675827, y: 3.2479258}
+  - {x: -0.6931179, y: 2.7656682}
+  - {x: 0.23287266, y: 1.8837554}
+  - {x: 0.8687355, y: 0.71633935}
+  - {x: 0.9859126, y: -0.38847977}
+  - {x: 1.3834809, y: -0.78608567}
+  - {x: 1.7331092, y: -1.0014255}
+  - {x: 8.745154, y: -1.05375}
+  - {x: 9.293888, y: -0.7520417}
+  - {x: 9.460218, y: -0.38918376}
+  - {x: 9.540806, y: 0.18044007}
 --- !u!1 &1426843629 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1123445783544090, guid: 6f8a5113da9a34743b71e405f865e795,
