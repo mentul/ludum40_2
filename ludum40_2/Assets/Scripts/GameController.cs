@@ -12,13 +12,14 @@ public class GameController : MonoBehaviour
 	void Start ()
 	{
 		Current = this;
-		//car.DoInit ();
+		car.DoInit ();
 		camera.DoInit ();
 	}
 
 	void Update ()
 	{
-		//car.DoUpdate ();
+		print("UPDATE");
+		car.DoUpdate ();
 		camera.DoUpdate ();
 	}
 }

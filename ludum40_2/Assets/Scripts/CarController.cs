@@ -8,7 +8,7 @@ public class CarController : MonoBehaviour {
 	private int coins = 0;
 	private int fameLevel = 0;
 	private int lap = 0;
-	private int velocity = 2;
+	private float velocity = 0.2f;
 
 	private GameObject camera;
 	public  GameObject car;
@@ -21,14 +21,14 @@ public class CarController : MonoBehaviour {
 	// Update is called once per frame
 	public void DoUpdate () {
 
-		Vector3 position = this.transform.position;
-		position.x += velocity;
-		car.transform.position = position;
+		//Vector3 position = this.transform.position;
+		//position.x += velocity;
+		//car.transform.position = position;
 		
 		if (Input.GetKey(KeyCode.RightArrow)){
 			print("right");
 			Vector3 newPosition = this.transform.position;
-			newPosition.x++;
+			newPosition.x += velocity;
 			car.transform.position = newPosition;
 
 		}
@@ -36,7 +36,7 @@ public class CarController : MonoBehaviour {
 			print("left");
 
 			Vector3 newPosition = this.transform.position;
-			newPosition.x--;
+			newPosition.x -= velocity;
 			car.transform.position = newPosition;
 
 		}
@@ -44,11 +44,16 @@ public class CarController : MonoBehaviour {
 			print("up");
 
 			Vector3 newPosition = this.transform.position;
-			newPosition.z += velocity;
+			newPosition.y += velocity;
 			car.transform.position = newPosition;
-
 		}
+		if (Input.GetKey(KeyCode.DownArrow)){
+			print("down");
 
+			Vector3 newPosition = this.transform.position;
+			newPosition.y -= velocity;
+			car.transform.position = newPosition;
+		}
 	}
 
 
