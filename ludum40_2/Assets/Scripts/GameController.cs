@@ -8,17 +8,28 @@ public class GameController : MonoBehaviour
 	public CarController car;
 	public CameraController camera;
 	public int loopCount;
+	public bool isRunning;
 
 	void Start ()
 	{
 		Current = this;
-		car.DoInit ();
 		camera.DoInit ();
 	}
 
 	void Update ()
 	{
-		car.DoUpdate ();
-		camera.DoUpdate ();
+		if (isRunning)
+		{
+			car.DoUpdate ();
+			camera.DoUpdate ();
+		}
+		else
+		{
+			if (Input.GetKeyDown (KeyCode.UpArrow) || Input.GetKey (KeyCode.W))
+			{
+				isRunning = true;
+				car.DoInit ();
+			}
+		}
 	}
 }
