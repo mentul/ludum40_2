@@ -76,6 +76,7 @@ public class CarController : MonoBehaviour
 		if (other.CompareTag ("coin"))
 		{
 			this.coins++;
+			Destroy(other.gameObject);
 			this.UpdateFameLevel ();
 		}
 		else if (other.CompareTag("checkPoint")) 
