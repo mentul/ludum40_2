@@ -8,6 +8,10 @@ public class CarController : MonoBehaviour {
 	private int coins = 0;
 	private int fameLevel = 0;
 	private int lap = 0;
+	private int velocity = 2;
+
+	private GameObject camera;
+	public  GameObject car;
 
 	// Use this for initialization
 	public void DoInit () {
@@ -16,7 +20,35 @@ public class CarController : MonoBehaviour {
 	
 	// Update is called once per frame
 	public void DoUpdate () {
+
+		Vector3 position = this.transform.position;
+		position.x += velocity;
+		car.transform.position = position;
 		
+		if (Input.GetKey(KeyCode.RightArrow)){
+			print("right");
+			Vector3 newPosition = this.transform.position;
+			newPosition.x++;
+			car.transform.position = newPosition;
+
+		}
+		if (Input.GetKey(KeyCode.LeftArrow)){
+			print("left");
+
+			Vector3 newPosition = this.transform.position;
+			newPosition.x--;
+			car.transform.position = newPosition;
+
+		}
+		if (Input.GetKey(KeyCode.UpArrow)){
+			print("up");
+
+			Vector3 newPosition = this.transform.position;
+			newPosition.z += velocity;
+			car.transform.position = newPosition;
+
+		}
+
 	}
 
 
