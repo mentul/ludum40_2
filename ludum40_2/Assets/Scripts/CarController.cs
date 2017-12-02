@@ -1,23 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class CarController : MonoBehaviour
 {
 
-	static int maxDamage = 10;
+	static int maxDamage = 100;
+	static int barrierCoolDownValue = 4;
 
 	private int damage = 0;
 	private int coins = 0;
 	private int fameLevel = 0;
-	private int lap = 0;
+	private int lap = 1;
 	public float velocity = 2f;
 	public float currentVelocity = 0f;
 	public float angle = 30;
-
+	public float coolDown = 1;
 	public GameObject checkPoint;
 	public GameObject car;
 	private Rigidbody2D myRigidBody;
+
+	public Text coinsLabel;
+	public Text fameLabel;
+	public Text damageLabel;
+	public Text lapLabel;
+
 	// Use this for initialization
 
 
@@ -30,7 +39,7 @@ public class CarController : MonoBehaviour
 	// Update is called once per frame
 	public void DoUpdate ()
 	{
-
+		coolDown -= Time.deltaTime;
 
 
 		if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.D))
@@ -92,6 +101,8 @@ public class CarController : MonoBehaviour
 			this.damage += 20;
 		}
 		print ("DAMAGE " + this.damage);
+
+		damageLabel.text = ("Damage " + this.damage + "/" + maxDamage);
 		this.UpdateGameStatus ();
 
 	}
@@ -100,19 +111,22 @@ public class CarController : MonoBehaviour
 
 	private void UpdateGameStatus ()
 	{
-		if (damage >= maxDamage) {
-			print ("DAMAGE " + this.checkPoint.transform.position);
-
+		if (damage >= maxDamage && coolDown < 0) {
 			this.transform.position = this.checkPoint.transform.position;
 			this.transform.rotation = this.checkPoint.transform.rotation;
 			myRigidBody.velocity = Vector2.zero;
-
+			this.damage = 0;
+			coolDown = barrierCoolDownValue;
 		}	
 	}
 
 	public void UpdateFameLevel ()
 	{
 		fameLevel = coins / 10 * lap;
+
+		coinsLabel.text = "Coins " + coins;
+		fameLabel.text = "Fame " + fameLevel;
+
 	}
 
 	public void UpdateLapLevel (int lapCount)
