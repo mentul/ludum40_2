@@ -18,11 +18,14 @@ public class BeggarController : MonoBehaviour {
 
 	void OnMouseUp()
 	{
-		print ("OnMouseUp");
-
 		GameController.Current.car.changeKeyboardBlock (false);
-		Destroy (this.gameObject);
+		//this.gameObject.se
+		killBeggart();
 	}
 
+	public void killBeggart()
+	{
+		Destroy (this.gameObject);
 
+	}
 }

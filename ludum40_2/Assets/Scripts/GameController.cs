@@ -7,7 +7,6 @@ public class GameController : MonoBehaviour
 	public static GameController Current;
 	public CarController car;
 	public CameraController camera;
-	public int loopCount;
 	public bool isRunning;
 	public GameObject map;
 
@@ -15,7 +14,6 @@ public class GameController : MonoBehaviour
 	{
 		Current = this;
 		camera.DoInit ();
-		CreateMap ();
 	}
 
 	void Update ()
@@ -32,14 +30,6 @@ public class GameController : MonoBehaviour
 				isRunning = true;
 				car.DoInit ();
 			}
-		}
-	}
-
-	void CreateMap ()
-	{
-		for (int i=0; i < loopCount; i++)
-		{
-			Instantiate (map, new Vector3 (i * 42f, 0f), map.transform.rotation);
 		}
 	}
 }

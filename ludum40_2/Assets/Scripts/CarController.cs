@@ -4,24 +4,38 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
+/* What is working list
+ * 1) Checkpoint detect, level count, lives lost, game over blocade, checkpoint respawn
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+
 public class CarController : MonoBehaviour
 {
 
-	static int maxHP = 150;
-	static int barrierCoolDownValue = 1;
+	static int coolDownValue = 1;
 	static int maxLap = 5;
 
-	private int hp = 150;
+	private int lives = 3;
 	private int coins = 0;
 	private int fameLevel = 0;
 	public float velocity = 2f;
 	public float currentVelocity = 0f;
 	public float angle = 30;
 	public float coolDown = 1;
+	public float coolDownCheckpoint = -1;
+
 	public int lapCount = 1;
 	public GameObject checkPoint;
 	public GameObject car;
 	public GameObject beggar;
+	public List<GameObject> beggarList;
 
 	private Rigidbody2D myRigidBody;
 
@@ -29,6 +43,7 @@ public class CarController : MonoBehaviour
 	public Text fameLabel;
 	public Text damageLabel;
 	public Text lapLabel;
+	public Button restartButton;
 
 	// Use this for initialization
 	private bool keyboardBlocked;
@@ -38,12 +53,17 @@ public class CarController : MonoBehaviour
 		myRigidBody = GetComponent<Rigidbody2D> ();
 		currentVelocity = velocity;
 		keyboardBlocked = false;
+		beggarList = new  List<GameObject>();
+		restartButton.gameObject.SetActive (false);
+		coolDown = -1;
+		coolDownCheckpoint = -1;
 	}
 
 	// Update is called once per frame
 	public void DoUpdate ()
 	{
 		coolDown -= Time.deltaTime;
+		coolDownCheckpoint -= Time.deltaTime;
 
 		if (!keyboardBlocked) {
 			if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.D)) {
@@ -74,8 +94,6 @@ public class CarController : MonoBehaviour
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		print ("OnTriggerEnter2D" + other.tag);
-
 		if (other.CompareTag ("coin"))
 		{
 			this.coins++;
@@ -87,8 +105,10 @@ public class CarController : MonoBehaviour
 		{
 			this.checkPoint = other.gameObject;
 		}
-		else if (other.CompareTag("finish")) 
+		else if (other.CompareTag("finish") && coolDownCheckpoint < 0) 
 		{
+			coolDownCheckpoint = coolDownValue;
+
 			if (this.checkPoint.tag != "finish")
 			{
 				lapCount += 1;
@@ -98,78 +118,86 @@ public class CarController : MonoBehaviour
 			if (lapCount > 5) {
 				lapLabel.text = "FINISHED";
 
+			} else {
+				lapLabel.text = "Lap " + lapCount + "/" + maxLap;
+				currentVelocity++;
+				UpdateFameLevel ();
 			}
-			UpdateFameLevel ();
 		}
 	}
 
 	void OnCollisionEnter2D (Collision2D other)
 	{
-		print ("OnCollisionEnter2D" + other.gameObject.tag);
-
-		if (other.gameObject.CompareTag ("box"))
+		if (other.gameObject.CompareTag ("barrier") && coolDown < 0)
 		{
-			this.hp -= 10;
+			this.lives -= 1;
+			coolDown = coolDownValue;
+			this.MoveToCheckPoint ();
 		}
-		else if (other.gameObject.CompareTag ("barrel"))
-		{
-			this.hp -= 15;
-		}
-		else if (other.gameObject.CompareTag ("barrier") && coolDown < 0)
-		{
-			this.hp -= 20;
-			coolDown = barrierCoolDownValue;
-		}
-
-		this.UpdateGameStatus ();
-
 	}
 
 
 
-	private void UpdateGameStatus ()
+	private void MoveToCheckPoint ()
 	{
-		if (hp <= 0) {
-			this.transform.position = this.checkPoint.transform.position;
-			this.transform.rotation = this.checkPoint.transform.rotation;
-			myRigidBody.velocity = Vector2.zero;
-			this.hp = 150;
-			coolDown = barrierCoolDownValue;
-		}	
+		this.transform.position = this.checkPoint.transform.position;
+		this.transform.rotation = this.checkPoint.transform.rotation;
+		myRigidBody.velocity = Vector2.zero;
+		damageLabel.text = ("Lives " + lives);
 
-		damageLabel.text = ("HP " + this.hp + "/" + maxHP);
+		if (lives <= 0) {
+			lapLabel.text = ("Game Over");
+			keyboardBlocked = true;
+			velocity = 0;
+			currentVelocity = 0;
+			restartButton.gameObject.SetActive (true);
+			for (int i = 0; i < beggarList.Count; i++)
+			{
+				Destroy (beggarList [0]);
+				changeKeyboardBlock (false);
+			}
+		}
 
 	}
 
 	public void UpdateFameLevel ()
 	{
 		fameLevel = coins / 10 + lapCount;
-
 		coinsLabel.text = "Coins " + coins;
 		fameLabel.text = "Fame " + fameLevel;
-
 	}
 		
-	public void changeKeyboardBlock(bool block)
-	{
-		keyboardBlocked = block;
-	}
 
-	public void showBeggaer()
+
+	void showBeggaer()
 	{
 		float x = car.transform.position.x;
 		float y = car.transform.position.y;
 
-		for (int i = 0; i <= fameLevel; i++)
+		for (int i = 0; i < fameLevel; i++)
 		{
 			keyboardBlocked = true;
 			float randX = Random.Range (x - 5, x + 5);
 			float randY = Random.Range (y - 5, y + 5);
 
-			Instantiate (beggar, new Vector3 (randX, randY), beggar.transform.rotation).transform.SetParent (GameController.Current.camera.transform);
+			beggarList.Add (beggar);
+			Instantiate (beggar, new Vector3 (randX, randY), GameController.Current.car.transform.rotation).transform.SetParent (GameController.Current.camera.transform);
 		}
+	}
 
+	public void changeKeyboardBlock(bool block)
+	{
+		if (beggarList.Count == 1) {
+			beggarList.RemoveAt (0);
+			keyboardBlocked = block;
+		} else {
+			beggarList.RemoveAt (0);
+		}
+	}
 
+	public void RestartOnClick()
+	{
+		Application.LoadLevel(Application.loadedLevel);
 	}
 
 }
