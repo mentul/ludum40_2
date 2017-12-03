@@ -12,20 +12,17 @@ public class BeggarController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
 	}
 
 
 	void OnMouseUp()
 	{
-		GameController.Current.car.changeKeyboardBlock (false);
-		//this.gameObject.se
 		killBeggart();
+		GameController.Current.car.changeKeyboardBlock ();
 	}
 
 	public void killBeggart()
 	{
 		Destroy (this.gameObject);
-
 	}
 }
