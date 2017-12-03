@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Linq;
 
 /* What is working list
  * 1) Checkpoint detect, level count, lives lost, game over blocade, checkpoint respawn
@@ -84,11 +84,7 @@ public class CarController : MonoBehaviour
 					currentVelocity = velocity;
 			}
 		}
-
-
-
 		myRigidBody.velocity = car.transform.up * currentVelocity;
-
 	}
 
 
@@ -98,8 +94,8 @@ public class CarController : MonoBehaviour
 		{
 			this.coins++;
 			Destroy(other.gameObject);
-			this.showBeggaer ();
 			this.UpdateFameLevel ();
+			this.showBeggaer ();
 		}
 		else if (other.CompareTag("checkPoint")) 
 		{
@@ -113,11 +109,9 @@ public class CarController : MonoBehaviour
 			{
 				lapCount += 1;
 			}
-
 			this.checkPoint = other.gameObject;
 			if (lapCount > 5) {
 				lapLabel.text = "FINISHED";
-
 			} else {
 				lapLabel.text = "Lap " + lapCount + "/" + maxLap;
 				currentVelocity++;
@@ -145,17 +139,21 @@ public class CarController : MonoBehaviour
 		myRigidBody.velocity = Vector2.zero;
 		damageLabel.text = ("Lives " + lives);
 
+		foreach (GameObject beg in GameObject.FindGameObjectsWithTag("beggar").ToList())
+		{
+			Destroy (beg);
+		}
+
+		beggarList.Clear ();
+		keyboardBlocked = false;
+
+
 		if (lives <= 0) {
 			lapLabel.text = ("Game Over");
 			keyboardBlocked = true;
 			velocity = 0;
 			currentVelocity = 0;
 			restartButton.gameObject.SetActive (true);
-			for (int i = 0; i < beggarList.Count; i++)
-			{
-				Destroy (beggarList [0]);
-				changeKeyboardBlock (false);
-			}
 		}
 
 	}
@@ -173,25 +171,27 @@ public class CarController : MonoBehaviour
 	{
 		float x = car.transform.position.x;
 		float y = car.transform.position.y;
+		print ("POS " + x + "    " + y);
+		beggarList.Clear ();
 
-		for (int i = 0; i < fameLevel; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			keyboardBlocked = true;
 			float randX = Random.Range (x - 5, x + 5);
-			float randY = Random.Range (y - 5, y + 5);
-
-			beggarList.Add (beggar);
-			Instantiate (beggar, new Vector3 (randX, randY), GameController.Current.car.transform.rotation).transform.SetParent (GameController.Current.camera.transform);
+			float randY = Random.Range (y - 3, y + 3);
+			print ("rand " + randX + "    " + randY);
+			GameObject test = Instantiate (beggar, new Vector3 (randX, randY), GameController.Current.car.transform.rotation);
+			test.transform.SetParent (GameController.Current.camera.transform);
+			beggarList.Add (test);
 		}
 	}
 
-	public void changeKeyboardBlock(bool block)
+	public void changeKeyboardBlock()
 	{
-		if (beggarList.Count == 1) {
-			beggarList.RemoveAt (0);
-			keyboardBlocked = block;
-		} else {
-			beggarList.RemoveAt (0);
+		int begCount = GameObject.FindGameObjectsWithTag ("beggar").Length;
+		if (begCount == 1)
+		{
+			keyboardBlocked = false;
 		}
 	}
 
