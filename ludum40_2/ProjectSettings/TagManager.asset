@@ -12,6 +12,7 @@ TagManager:
   - coinsLabel
   - finish
   - beggar
+  - start
   layers:
   - Default
   - TransparentFX

@@ -79,6 +79,8 @@ public class CarController : MonoBehaviour
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
+
+		print ("TAG " + other.gameObject.tag);
 		if (other.CompareTag ("coin"))
 		{
 			this.coins++;
@@ -90,9 +92,22 @@ public class CarController : MonoBehaviour
 		{
 			this.checkPoint = other.gameObject;
 		}
+		else if (other.CompareTag("start")) 
+		{
+			this.checkPoint = other.gameObject;
+		}
 		else if (other.CompareTag("finish") && coolDownCheckpoint < 0) 
 		{
 			coolDownCheckpoint = coolDownValue;
+			print ("TAG dwa  " + this.checkPoint.tag);
+
+			if (this.checkPoint.tag == "start")
+			{
+				this.lives -= 1;
+				coolDown = coolDownValue;
+				this.MoveToCheckPoint ();
+				return;
+			}
 
 			if (this.checkPoint.tag != "finish")
 			{
@@ -179,8 +194,8 @@ public class CarController : MonoBehaviour
 			for (int i = 0; i < fameLevel/2; i++)
 			{
 				keyboardBlocked = true;
-				float randX = Random.Range (x - 7, x + 7);
-				float randY = Random.Range (y - 4, y + 4);
+				float randX = Random.Range (x - 2, x + 2);
+				float randY = Random.Range (y - 2, y + 2);
 				print ("rand " + randX + "    " + randY);
 				GameObject test = Instantiate (beggar, new Vector3 (randX, randY), GameController.Current.camera.transform.rotation);
 				test.transform.SetParent (GameController.Current.camera.transform);
