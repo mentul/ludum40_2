@@ -118,10 +118,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99b170473a3e7904c8ceb80a1e852234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 2
+  maxLap: 5
   currentVelocity: 0
+  baseVelocity: 4
   angle: 80
+  coolDown: 1
+  coolDownCheckpoint: -1
+  lapCount: 1
+  checkPoint: {fileID: 0}
   car: {fileID: 1451783126354926}
+  beggar: {fileID: 0}
+  beggarList: []
+  coinsLabel: {fileID: 0}
+  fameLabel: {fileID: 0}
+  damageLabel: {fileID: 0}
+  lapLabel: {fileID: 0}
+  restartButton: {fileID: 0}
 --- !u!212 &212878243728493290
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -154,7 +166,7 @@ SpriteRenderer:
   m_SortingLayerID: -1133869555
   m_SortingLayer: -1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1142195808e40467584a2c6293cf0174, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6822a758d8d42754ab535123e2d64fb9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -162,3 +174,5 @@ SpriteRenderer:
   m_Size: {x: 0.4, y: 0.87}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
