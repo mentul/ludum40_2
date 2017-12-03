@@ -17,6 +17,7 @@ public class BeggarController : MonoBehaviour {
 
 	void OnMouseUp()
 	{
+		GameController.Current.camera.GetComponent<AudioSource> ().Play ();
 		killBeggart();
 		GameController.Current.car.changeKeyboardBlock ();
 	}

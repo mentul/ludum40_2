@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour
 		}
 		else
 		{
-			if (Input.GetKeyDown (KeyCode.UpArrow) || Input.GetKey (KeyCode.W))
+			if (Input.GetKeyDown (KeyCode.Space))
 			{
 				isRunning = true;
 				car.DoInit ();

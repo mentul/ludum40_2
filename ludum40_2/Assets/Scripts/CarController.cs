@@ -179,8 +179,8 @@ public class CarController : MonoBehaviour
 			for (int i = 0; i < fameLevel/2; i++)
 			{
 				keyboardBlocked = true;
-				float randX = Random.Range (x - 5, x + 5);
-				float randY = Random.Range (y - 3, y + 3);
+				float randX = Random.Range (x - 7, x + 7);
+				float randY = Random.Range (y - 4, y + 4);
 				print ("rand " + randX + "    " + randY);
 				GameObject test = Instantiate (beggar, new Vector3 (randX, randY), GameController.Current.camera.transform.rotation);
 				test.transform.SetParent (GameController.Current.camera.transform);
