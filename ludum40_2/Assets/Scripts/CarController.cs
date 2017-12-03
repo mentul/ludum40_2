@@ -9,7 +9,7 @@ public class CarController : MonoBehaviour
 {
 
 	static int coolDownValue = 1;
-	static int maxLap = 5;
+	public int maxLap = 5;
 
 	private int lives = 3;
 	private int coins = 0;
@@ -39,13 +39,7 @@ public class CarController : MonoBehaviour
 
 
 	public void DoInit () {
-		myRigidBody = GetComponent<Rigidbody2D> ();
-		currentVelocity = baseVelocity + fameLevel/2;
-		keyboardBlocked = false;
-		beggarList = new  List<GameObject>();
-		restartButton.gameObject.SetActive (false);
-		coolDown = -1;
-		coolDownCheckpoint = -1;
+		startRound ();
 	}
 
 	// Update is called once per frame
@@ -68,6 +62,18 @@ public class CarController : MonoBehaviour
 			}
 		}
 		myRigidBody.velocity = car.transform.up * currentVelocity;
+	}
+
+	void startRound()
+	{
+		myRigidBody = GetComponent<Rigidbody2D> ();
+		currentVelocity = baseVelocity + fameLevel/2;
+		keyboardBlocked = false;
+		beggarList = new  List<GameObject>();
+		restartButton.gameObject.SetActive (false);
+		coolDown = -1;
+		coolDownCheckpoint = -1;
+
 	}
 
 
@@ -96,14 +102,19 @@ public class CarController : MonoBehaviour
 			this.checkPoint = other.gameObject;
 			UpdateFameLevel ();
 
-			if (lapCount > 5) {
-				lapLabel.text = "FINISHED";
-				currentVelocity = 0;
+			if (lapCount > maxLap) {
+				lapLabel.text = "YOU WIN";
+				Invoke ("StopAuto",0.9f);
 			} else {
 				lapLabel.text = "Lap " + lapCount + "/" + maxLap;
 				currentVelocity = baseVelocity + fameLevel/2;
 			}
 		}
+	}
+
+	void StopAuto()
+	{
+		currentVelocity = 0;
 	}
 
 	void OnCollisionEnter2D (Collision2D other)
@@ -120,8 +131,7 @@ public class CarController : MonoBehaviour
 
 	private void MoveToCheckPoint ()
 	{
-		this.transform.position = this.checkPoint.transform.position;
-		this.transform.rotation = this.checkPoint.transform.rotation;
+
 		myRigidBody.velocity = Vector2.zero;
 		damageLabel.text = ("Lives " + lives);
 
@@ -138,8 +148,12 @@ public class CarController : MonoBehaviour
 			lapLabel.text = ("Game Over");
 			keyboardBlocked = true;
 			currentVelocity = 0;
-			restartButton.gameObject.GetComponentInChildren<Text>().text = "Start";
+			restartButton.gameObject.GetComponentInChildren<Text> ().text = "Restart";
 			restartButton.gameObject.SetActive (true);
+		} else {
+			this.transform.position = this.checkPoint.transform.position;
+			this.transform.rotation = this.checkPoint.transform.rotation;
+
 		}
 
 	}
@@ -168,7 +182,7 @@ public class CarController : MonoBehaviour
 				float randX = Random.Range (x - 5, x + 5);
 				float randY = Random.Range (y - 3, y + 3);
 				print ("rand " + randX + "    " + randY);
-				GameObject test = Instantiate (beggar, new Vector3 (randX, randY), GameController.Current.car.transform.rotation);
+				GameObject test = Instantiate (beggar, new Vector3 (randX, randY), GameController.Current.camera.transform.rotation);
 				test.transform.SetParent (GameController.Current.camera.transform);
 				beggarList.Add (test);
 			}
@@ -186,7 +200,13 @@ public class CarController : MonoBehaviour
 
 	public void RestartOnClick()
 	{
-		Application.LoadLevel(Application.loadedLevel);
+		if (lives <= 0) {
+			Application.LoadLevel (Application.loadedLevel);
+		} else {
+			startRound ();
+			currentVelocity = baseVelocity + fameLevel;
+			GameController.Current.isRunning = true;
+		}
 	}
 
 }

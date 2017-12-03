@@ -9,12 +9,12 @@ public class CameraController : MonoBehaviour
 	public void DoInit ()
 	{
 		carTransform = GameController.Current.car.transform;
-		transform.position = carTransform.position + Vector3.back * 10f;
-		transform.SetParent (carTransform);
+		//transform.SetParent (carTransform);
 	}
 
 	public void DoUpdate ()
 	{
+		transform.position = carTransform.position + Vector3.back * 10f;
 
 	}
 }
