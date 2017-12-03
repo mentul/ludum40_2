@@ -11,6 +11,7 @@ TagManager:
   - checkPoint
   - coinsLabel
   - finish
+  - beggar
   layers:
   - Default
   - TransparentFX
